@@ -11,13 +11,52 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-
+  id       String @id @default(uuid())
   email    String @unique
   password String
-
-  name String?
+  name     String
 
   //define name of the table
+  //Company Company[]
+  //   Company   Company? @relation(fields: [companyId], references: [id])
+  //   companyId String?
   @@map("user")
 }
+
+// model Location {
+//   id           Int       @id @default(autoincrement())
+//   name         String
+//   postal_code  Int
+//   address      String
+//   number       Int
+//   neighborhood String
+//   city         String
+//   state        String
+//   country      String    @default("brazil")
+//   created_at   DateTime  @default(now())
+//   update_at    DateTime  @default(now())
+//   deleted_at   DateTime?
+
+//   Company Company[]
+//   @@map("location")
+// }
+
+// model Company {
+//   id           String  @id @default(uuid())
+//   name         String
+//   legal_name   String
+//   legal_number Int
+//   site         String
+//   description  String
+//   industry_id  String
+//   user_id      String
+//   logo         String?
+//   linkedin_url String?
+//   location_id  Int?
+//   size_id      String?
+
+//   Location Location? @relation(fields: [location_id], references: [id])
+//   User     User[]    @relation(fields: [user_id], references: [id])
+
+//   @@map("company")
+// }
