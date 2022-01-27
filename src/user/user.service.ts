@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { FindByEmailUserDto } from './dto/findByEmail-user.dto';
 
 @Injectable()
 export class UserService {
@@ -32,10 +33,18 @@ export class UserService {
     return `This action returns a #${id} user`;
   }
 
-  /* findAll() {
-    return `This action returns all user`;
+  async findByEmail({ email }: FindByEmailUserDto) {
+    return await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
   }
 
+  async findAll() {
+    return await this.prisma.user.findMany();
+  }
+  /*
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }

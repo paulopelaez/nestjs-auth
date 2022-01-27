@@ -10,6 +10,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { FindByEmailUserDto } from './dto/findByEmail-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -20,11 +21,17 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  /* @Get()
+  @Get()
   findAll() {
     return this.userService.findAll();
   }
 
+  @Get('findByEmail')
+  findOne(@Body() findByEmailUserDto: FindByEmailUserDto) {
+    return this.userService.findByEmail(findByEmailUserDto);
+  }
+
+  /*
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
