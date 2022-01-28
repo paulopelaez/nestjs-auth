@@ -28,7 +28,7 @@ export class UserController {
 
   @Get('findByEmail')
   findOne(@Body() findByEmailUserDto: FindByEmailUserDto) {
-    return this.userService.findByEmail(findByEmailUserDto);
+    return this.userService.findByEmail(findByEmailUserDto.email);
   }
 
   /*
