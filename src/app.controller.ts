@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { Roles, Public, Unprotected } from 'nest-keycloak-connect';
 import { AppService } from './app.service';
 import { CurrentUser } from './auth/decorators/current-user.decorator';
 import { IsPublic } from './auth/decorators/is-public.decorator';
@@ -8,10 +9,24 @@ import { User } from './user/entities/user.entity';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @IsPublic()
-  @Get()
+  //@IsPublic()
+  //@Unprotected()
+  @Get('dev')
+  @Roles({ roles: ['dev'] })
   getHello(): string {
-    return this.appService.getHello();
+    return this.appService.getHello('dev');
+  }
+
+  @Get('qa')
+  @Roles({ roles: ['qa'] })
+  getHello2(): string {
+    return this.appService.getHello('qa');
+  }
+
+  @Get('example')
+  @Roles({ roles: ['qa', 'dev', 'manager'] })
+  getHello3(): string {
+    return this.appService.getHello('qa');
   }
 
   @Get('me')
