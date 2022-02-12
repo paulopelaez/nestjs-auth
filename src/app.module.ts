@@ -27,10 +27,12 @@ import {
   AuthGuard,
   KeycloakConnectModule,
   RoleGuard,
+  TokenValidation,
 } from 'nest-keycloak-connect';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 const keyCloakOptionsProvider = {
   provide: 'keyCloakDataProvider',
@@ -40,6 +42,7 @@ const keyCloakOptionsProvider = {
       realm: config.get('KEYCLOAK_REALM'),
       clientId: config.get('KEYCLOAK_CLIENT_ID'),
       secret: config.get('KEYCLOAK_CLIENT_SECRET'),
+      tokenValidation: TokenValidation.OFFLINE,
     };
   },
   inject: [ConfigService],
@@ -47,6 +50,7 @@ const keyCloakOptionsProvider = {
 
 @Module({
   imports: [
+    PrismaModule,
     KeycloakConnectModule.registerAsync(keyCloakOptionsProvider),
     AuthModule,
     ConfigModule.forRoot({
