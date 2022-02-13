@@ -11,52 +11,55 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  password String
+  uuid     String @id @default(uuid())
+  id       Int    @default(autoincrement())
   name     String
+  username String @unique
+  email    String @unique
 
-  //define name of the table
-  //Company Company[]
-  //   Company   Company? @relation(fields: [companyId], references: [id])
-  //   companyId String?
+  //columns default to cotroller
+  created_by User?
+  updated_by User?
+  created_at DateTime  @default(now())
+  update_at  DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+
   @@map("user")
 }
 
-// model Location {
-//   id           Int       @id @default(autoincrement())
-//   name         String
-//   postal_code  Int
-//   address      String
-//   number       Int
-//   neighborhood String
-//   city         String
-//   state        String
-//   country      String    @default("brazil")
-//   created_at   DateTime  @default(now())
-//   update_at    DateTime  @default(now())
-//   deleted_at   DateTime?
+model Address {
+  id           Int       @id @default(uuid())
+  name         String?
+  postal_code  Int?
+  address      String?
+  number       Int?
+  neighborhood String?
+  city         String
+  state        String
+  country      String    @default("brazil")
+  created_at   DateTime  @default(now())
+  update_at    DateTime  @default(now()) @updatedAt
+  deleted_at   DateTime?
 
-//   Company Company[]
-//   @@map("location")
-// }
+  @@map("address")
+}
 
-// model Company {
-//   id           String  @id @default(uuid())
-//   name         String
-//   legal_name   String
-//   legal_number Int
-//   site         String
-//   description  String
-//   industry_id  String
-//   user_id      String
-//   logo         String?
-//   linkedin_url String?
-//   location_id  Int?
-//   size_id      String?
+model Company {
+  id           String  @id @default(uuid())
+  name         String
+  legal_name   String
+  legal_number Int
+  site         String
+  description  String
+  industry_id  String
+  user_id      String
+  logo         String?
+  linkedin_url String?
+  location_id  Int?
+  size_id      String?
 
-//   Location Location? @relation(fields: [location_id], references: [id])
-//   User     User[]    @relation(fields: [user_id], references: [id])
+  // Location Location? @relation(fields: [location_id], references: [id])
+  // User     User[]    @relation(fields: [user_id], references: [id])
 
-//   @@map("company")
-// }
+  @@map("company")
+}
